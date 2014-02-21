@@ -3,7 +3,7 @@
 
 
 @interface HFImageEditorFrameView ()
-@property (nonatomic,retain) UIImageView *imageView;
+@property (nonatomic,strong) UIImageView *imageView;
 @end
 
 @implementation HFImageEditorFrameView
@@ -21,7 +21,6 @@
     imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self addSubview:imageView];
     self.imageView = imageView;
-    [imageView release];
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -42,25 +41,20 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [_imageView release];
-    [super dealloc];
-}
 
 
 - (void)setCropRect:(CGRect)cropRect
 {
     if(!CGRectEqualToRect(_cropRect,cropRect)){
-        _cropRect = cropRect;
+        _cropRect = CGRectOffset(cropRect, self.frame.origin.x, self.frame.origin.y);
         UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, 0.f);
         CGContextRef context = UIGraphicsGetCurrentContext();
         [[UIColor blackColor] setFill];
         UIRectFill(self.bounds);
         CGContextSetStrokeColorWithColor(context, [[UIColor whiteColor] colorWithAlphaComponent:0.5].CGColor);
-        CGContextStrokeRect(context, _cropRect);
+        CGContextStrokeRect(context, cropRect);
         [[UIColor clearColor] setFill];
-        UIRectFill(CGRectInset(_cropRect, 1, 1));
+        UIRectFill(CGRectInset(cropRect, 1, 1));
         self.imageView.image = UIGraphicsGetImageFromCurrentImageContext();
 
         UIGraphicsEndImageContext();

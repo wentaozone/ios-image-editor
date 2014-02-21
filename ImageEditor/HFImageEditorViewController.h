@@ -15,6 +15,7 @@ typedef void(^HFImageEditorDoneCallback)(UIImage *image, BOOL canceled);
 @property(nonatomic,copy) UIImage *sourceImage;
 @property(nonatomic,copy) UIImage *previewImage;
 @property(nonatomic,assign) CGSize cropSize;
+@property(nonatomic,assign) CGRect cropRect;
 @property(nonatomic,assign) CGFloat outputWidth;
 @property(nonatomic,assign) CGFloat minimumScale;
 @property(nonatomic,assign) CGFloat maximumScale;
@@ -23,6 +24,7 @@ typedef void(^HFImageEditorDoneCallback)(UIImage *image, BOOL canceled);
 @property(nonatomic,assign) BOOL rotateEnabled;
 @property(nonatomic,assign) BOOL scaleEnabled;
 @property(nonatomic,assign) BOOL tapToResetEnabled;
+@property(nonatomic,assign) BOOL checkBounds;
 
 @property(nonatomic,readonly) CGRect cropBoundsInSourceImage;
 
